@@ -3,13 +3,17 @@
     namespace app\core;
 
     class Application {
+        public static string $ROOT_PATH;
         public Router $router;
         public Request $request;
-        public function __construct(){
+        public Response $response;
+        public function __construct($root_path){
+            self::$ROOT_PATH = $root_path;
             $this->requst = new Request();
-            $this->router = new Router($this->requst);
+            $this->response = new Response();
+            $this->router = new Router($this->requst,$this->response);
         }
         public function run(){
-            $this->router->resolve();
+            echo $this->router->resolve();
         }
     }
