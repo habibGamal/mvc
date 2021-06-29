@@ -32,22 +32,30 @@
             if(is_string($callback)){
                 return $this->renderView($callback);
             }
-            return call_user_func($callback);
+            if(is_array($callback)){
+                Application::$app->controller = new $callback[0]();
+                $callback[0] = Application::$app->controller;
+            }
+            return call_user_func($callback , $this->request);
         }
 
-        public function renderView($view){
+        public function renderView($view ,$params = []){
             $layoutContent = $this->layoutContent();
-            $viewContent = $this->renderOnlyView($view);
+            $viewContent = $this->renderOnlyView($view ,$params);
             return str_replace('{{content}}',$viewContent,$layoutContent);
         }
 
         public function layoutContent(){
+            $layout = Application::$app->controller->layout;
             ob_start();
-            include_once Application::$ROOT_PATH . "/views/layout/main.php";
+            include_once Application::$ROOT_PATH . "/views/layout/$layout.php";
             return ob_get_clean();
         }
 
-        public function renderOnlyView($view){
+        public function renderOnlyView($view ,$params){
+            foreach($params as $key=>$val){
+                $$key = $val; // to be like this : $name = "value"
+            }
             ob_start();
             include_once Application::$ROOT_PATH . "/views/$view.php";
             return ob_get_clean();
