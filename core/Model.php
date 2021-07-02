@@ -69,4 +69,11 @@
                     self::RULE_MATCH =>'This field must be the same as {match}',
             ];
         }
+
+        public function hasError($attr){
+            return $this->errors[$attr] ?? false;
+        }
+        public function getFristError($attr){
+            return $this->errors[$attr][0] ?? '';
+        }
     }

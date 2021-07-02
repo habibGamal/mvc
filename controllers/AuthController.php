@@ -20,7 +20,6 @@
                 if($registerModel->validate() && $registerModel->register()){
                     return 'success';
                 }
-                u::show($registerModel->errors);
                 return $this->render('register',[
                     'model' => $registerModel
                 ]);

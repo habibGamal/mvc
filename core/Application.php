@@ -13,13 +13,15 @@
         public Router $router;
         public Request $request;
         public Response $response;
+        public Database $db;
         public Controller $controller;
-        public function __construct($root_path){
+        public function __construct($root_path ,array $config){
             self::$ROOT_PATH = $root_path;
             self::$app = $this;
             $this->requst = new Request();
             $this->response = new Response();
             $this->router = new Router($this->requst,$this->response);
+            $this->db = new Database($config['db']);
         }
         public function setController($controller){
             $this->controller = $controller;
