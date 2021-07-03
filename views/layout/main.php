@@ -1,4 +1,7 @@
 <?php use app\core\Application; ?>
+<?php 
+    show(Application::$app->user);
+?>
 <!doctype html>
 <html lang="en">
   <head>

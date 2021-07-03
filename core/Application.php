@@ -9,14 +9,17 @@
          * Application class link {request,response,controller} with router
          */
         public static string $ROOT_PATH;
+        public string $userClass;
         public static Application $app;
         public Router $router;
         public Request $request;
         public Response $response;
         public Session $session;
         public Database $db;
+        public ?DbModel $user; // it might be null
         public Controller $controller;
         public function __construct($root_path ,array $config){
+            $this->userClass = $config['userClass'];
             self::$ROOT_PATH = $root_path;
             self::$app = $this;
             $this->requst = new Request();
@@ -24,12 +27,31 @@
             $this->session = new Session();
             $this->router = new Router($this->requst,$this->response);
             $this->db = new Database($config['db']);
+            $primaryValue = $this->session->get('user');
+            if($primaryValue){
+                show($primaryValue);
+                $primaryKey = $this->userClass::primaryKey();
+                $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
+            }else{
+                $this->user = null;
+            }
         }
         public function setController($controller){
             $this->controller = $controller;
         }
         public function getController(){
             return $this->controller;
+        }
+        public function login(DbModel $user){
+            $this->user = $user;
+            $primaryKey = $user->primaryKey();
+            $primaryValue = $user->{$primaryKey};
+            $this->session->set('user' , $primaryValue);
+            return true;
+        }
+        public function logout(DbModel $user){
+            $this->user = null;
+            $this->session->remove('user');
         }
         public function run(){
             echo $this->router->resolve();

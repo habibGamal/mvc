@@ -1,3 +1,6 @@
+<?php 
+  /**  @var $model \app\models\User */
+?>
 <h1>Register</h1>
 <?php use app\core\form\Form; ?>
 

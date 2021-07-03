@@ -19,6 +19,10 @@
             return 'users';
         }
 
+        public function primaryKey(): string{
+            return 'id';
+        }
+
         public function attributes(): array{
             return ['firstname','lastname','email','password','status'];
         }

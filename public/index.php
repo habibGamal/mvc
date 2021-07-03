@@ -2,7 +2,7 @@
     use app\controllers\AuthController;
     use app\controllers\SiteController;
     use app\core\Application;
-    use app\Utility as u;
+    use app\models\User;
     function show($var){
         echo '<pre>';
         var_dump($var);
@@ -13,6 +13,7 @@
     $dotenv->load();
     
     $config = [
+        'userClass' => User::class,
         'db' => [
             'dsn' => $_ENV['DB_DSN'],
             'user' => $_ENV['DB_USER'],
