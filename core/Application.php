@@ -13,6 +13,7 @@
         public Router $router;
         public Request $request;
         public Response $response;
+        public Session $session;
         public Database $db;
         public Controller $controller;
         public function __construct($root_path ,array $config){
@@ -20,6 +21,7 @@
             self::$app = $this;
             $this->requst = new Request();
             $this->response = new Response();
+            $this->session = new Session();
             $this->router = new Router($this->requst,$this->response);
             $this->db = new Database($config['db']);
         }

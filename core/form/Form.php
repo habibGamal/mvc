@@ -2,9 +2,9 @@
 
     namespace app\core\form;
 
-use app\core\Model;
+    use app\core\Model;
 
-class Form {
+    class Form {
         public static function begin($action,$method){
             echo sprintf('<form actoin="%s" method="%s">',$action,$method);
             return new Form();

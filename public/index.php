@@ -3,7 +3,11 @@
     use app\controllers\SiteController;
     use app\core\Application;
     use app\Utility as u;
-    
+    function show($var){
+        echo '<pre>';
+        var_dump($var);
+        echo '</pre>';
+    }
     require_once __DIR__.'/../vendor/autoload.php';
     $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
     $dotenv->load();
