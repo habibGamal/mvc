@@ -17,7 +17,7 @@
         public Session $session;
         public Database $db;
         public ?DbModel $user; // it might be null
-        public Controller $controller;
+        public ?Controller $controller = null;
         public function __construct($root_path ,array $config){
             $this->userClass = $config['userClass'];
             self::$ROOT_PATH = $root_path;
@@ -29,7 +29,6 @@
             $this->db = new Database($config['db']);
             $primaryValue = $this->session->get('user');
             if($primaryValue){
-                show($primaryValue);
                 $primaryKey = $this->userClass::primaryKey();
                 $this->user = $this->userClass::findOne([$primaryKey => $primaryValue]);
             }else{
@@ -49,7 +48,10 @@
             $this->session->set('user' , $primaryValue);
             return true;
         }
-        public function logout(DbModel $user){
+        public static function isGuest(){
+            return !self::$app->user;
+        }
+        public function logout(){
             $this->user = null;
             $this->session->remove('user');
         }

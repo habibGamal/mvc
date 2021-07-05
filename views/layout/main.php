@@ -1,7 +1,4 @@
 <?php use app\core\Application; ?>
-<?php 
-    show(Application::$app->user);
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -31,12 +28,18 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                <?php if(Application::isGuest()):?>
                 <li class="nav-item active">
                     <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/register">Registeration</a>
                 </li>
+                <?php else: ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Welcome <?php echo Application::$app->user->getDisplayName();?> Logout</a>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </nav>

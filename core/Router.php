@@ -46,7 +46,7 @@
         }
 
         public function layoutContent(){
-            $layout = Application::$app->controller->layout;
+            $layout = Application::$app->controller !== null ? Application::$app->controller->layout : 'main' ;
             ob_start();
             include_once Application::$ROOT_PATH . "/views/layout/$layout.php";
             return ob_get_clean();
